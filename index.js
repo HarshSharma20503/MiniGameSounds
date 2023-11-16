@@ -7,7 +7,29 @@ function handleHint()
   alert('In order to go to the next level you have to click these buttons');
 }
 
-var opt = "rqb";
+//assinging sounds to the array indexs
+var arr = [];
+for (var i = 0; i < 26; i++) {
+    var ch = String.fromCharCode('a'.charCodeAt(0) + i);
+    arr.push("sounds/" + ch + ".mp3");
+}
+// Generate a random index in the range [0, 25)
+// var randomIndex = Math.floor(Math.random() * 26);
+
+
+function generateRandomString(n) {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let randomString = '';
+
+  for (let i = 0; i < n; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString += characters.charAt(randomIndex);
+  }
+
+  return randomString;
+}
+
+var opt = generateRandomString(2);
 function setName(cart)
 {
   cart.innerHTML = opt;
@@ -32,37 +54,23 @@ var jiitState = 0;
 
 document.addEventListener("keypress", function (event) {
   makeSound(event.key);
+  // alert(opt);
+  var enteredCharIndex = event.key.charCodeAt(0) - 'a'.charCodeAt(0);
+  console.log(enteredCharIndex);
+  var parts = arr[enteredCharIndex].split("/");
+  var characterAfterSlash = parts[1];
+  var chars = characterAfterSlash[0];
+  console.log(chars);
   
-  console.log(event.key);
-  console.log(opt[jiitState])
-  console.log(jiitState)
-  if(event.key == opt[jiitState])
+  if(chars == opt[jiitState])
   {
     jiitState++;
-    alert(jiitState);
-  }
-  else jiitState = 0 ;
-  if(jiitState === opt.size())
+  if(jiitState === opt.length)
   {
       handleJiitCombination();
   }
-  // for(var i=0 ;i <opt.size() ; i++)
-  // {
-  //    if (event.key === "j" && jiitState === 0) {
-  //   jiitState = 1;
-  // }
-  // if (event.key === "j" && jiitState === 0) {
-  //   jiitState = 1;
-  // } else if (event.key === "i" && jiitState === 1) {
-  //   jiitState = 2;
-  // } else if (event.key === "i" && jiitState === 2) {
-  //   jiitState = 3;
-  // } else if (event.key === "t" && jiitState === 3) {
-  //   handleJiitCombination();
-  //   jiitState = 0;
-  // } else {
-  //   jiitState = 0;
-  // }
+  }
+  else jiitState = 0 ;
 });
 function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i--) {
@@ -73,36 +81,12 @@ function shuffleArray(array) {
   }
   return array;
 }
-var arr= [];
-arr.push("sounds/r.mp3");
-arr.push("sounds/q.mp3");
-arr.push("sounds/b.mp3");
-arr.push("sounds/m.mp3");
-arr.push("sounds/s.mp3");
-arr.push("sounds/c.mp3");
-arr.push("sounds/k.mp3");
-arr.push("sounds/t.mp3");
-arr.push("sounds/a.mp3");
-arr.push("sounds/i.mp3");
-arr.push("sounds/j.mp3");
-arr.push("sounds/e.mp3");
-arr.push("sounds/l.mp3");
-arr.push("sounds/n.mp3");
-arr.push("sounds/z.mp3");
-arr.push("sounds/y.mp3");
-arr.push("sounds/f.mp3");
-arr.push("sounds/h.mp3");
-arr.push("sounds/d.mp3");
-arr.push("sounds/t.mp3");
-arr.push("sounds/g.mp3");
-arr.push("sounds/o.mp3");
-arr.push("sounds/u.mp3");
-arr.push("sounds/p.mp3");
-arr.push("sounds/w.mp3");
-// arr = shuffleArray(arr);
+
+arr = shuffleArray(arr);
+
 
 function makeSound(key) 
-{
+{console.log(arr);
   switch (key) {
     case "a":
       var tom1 = new Audio(arr[0]);
